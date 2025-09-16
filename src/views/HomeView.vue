@@ -1,9 +1,3 @@
-  // 一级节点外发光滤镜
-  defs.append('filter')
-    .attr('id', 'root-glow')
-    .html(`
-      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#fff" flood-opacity="0.7"/>
-    `);
 <template>
   <div class="home">
     <svg ref="svgRef" style="display:block;margin:0 32px;width:calc(100vw - 64px);height:600px;"></svg>
@@ -85,6 +79,16 @@ onMounted(() => {
 
   // 定义阴影和高光滤镜
   const defs = svg.append('defs');
+  // 一级节点外发光滤镜
+  defs.append('filter')
+    .attr('id', 'root-glow')
+    .attr('x', '-40%')
+    .attr('y', '-40%')
+    .attr('width', '180%')
+    .attr('height', '180%')
+    .html(`
+      <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#fff" flood-opacity="0.7"/>
+    `);
   // 多种半径的箭头marker
   const markerSizes = [12, 16, 22, 36];
         markerSizes.forEach(r => {
@@ -264,8 +268,8 @@ onMounted(() => {
     .selectAll('circle')
     .data(nodes)
     .join('circle')
-    .attr('stroke', d => d.level === 1 ? '#222' : '#fff')
-    .attr('stroke-width', d => d.level === 1 ? 4 : 1.5)
+    .attr('stroke', d => d.level === 1 ? 'none' : '#fff')
+    .attr('stroke-width', d => d.level === 1 ? 0 : 1.5)
     .attr('filter', d => d.level === 1 ? 'url(#root-glow)' : null)
     .attr('r', d => {
       if (d.level === 1) return 36 // 一级节点更大
